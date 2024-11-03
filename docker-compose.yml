@@ -6,7 +6,12 @@ services:
       dockerfile: SwaggerWithOcelotAndYarp.Yarp.Gateway/Dockerfile
     image: yarp-gateway:latest
     ports:
-    - 5000:8080
+    - 5000:8080    
+    depends_on:
+    - order.webapi
+    - catalog.webapi
+    networks:
+    - my_network
   order.webapi:
     container_name: order-webapi
     build:
@@ -15,6 +20,8 @@ services:
     image: order-webapi:latest
     ports:
     - 5001:8080
+    networks:
+    - my_network
   catalog.webapi:
     container_name: catalog-webapi
     build:
@@ -23,3 +30,9 @@ services:
     image: catalog-webapi:latest
     ports:
     - 5002:8080  
+    networks:
+    - my_network
+
+networks:
+  my_network:
+    driver: bridge

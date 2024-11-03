@@ -23,7 +23,7 @@ public static class SwaggerExensions
                 {
                     if (destination.Value.Swagger is not null)
                     {
-                        GetSwaggerJsonFile(httpClient, destination.Value.Address, destination.Value.Swagger.Prefix, destination.Value.Swagger.FileName);
+                        GetSwaggerJsonFile(httpClient, destination.Value.Swagger.Url, destination.Value.Swagger.Prefix, destination.Value.Swagger.FileName);
                         SwaggerFiles.Add(destination.Value.Swagger.SwaggerName, "/" + destination.Value.Swagger.FileName + ".json");
                     }
                 }
@@ -118,4 +118,5 @@ public class Swagger
     public string FileName { get; set; } = default!;
     public string Prefix { get; set; } = default!;
     public string SwaggerName { get; set; } = default!;
+    public string Url { get; set; } = default!;
 }

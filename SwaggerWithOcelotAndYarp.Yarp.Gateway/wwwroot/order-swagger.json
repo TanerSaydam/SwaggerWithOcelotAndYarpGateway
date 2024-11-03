@@ -27,6 +27,25 @@
         }
       }
     },
+    "/order/": {
+      "get": {
+        "tags": [
+          "SwaggerWithOcelotAndYarp.Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/order/api/Values": {
       "get": {
         "tags": [

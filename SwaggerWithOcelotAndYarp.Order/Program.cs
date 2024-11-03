@@ -8,9 +8,12 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
+
+app.MapGet("/", () => "Hello order world!");
 
 app.MapGet("/api/get-all", () =>
 {
