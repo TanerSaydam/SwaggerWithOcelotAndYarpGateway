@@ -10,23 +10,30 @@ public static class SwaggerExensions
     {
         SwaggerFiles = new();
 
-        var httpClient = builder.Services.BuildServiceProvider().GetRequiredService<HttpClient>();
-        var options = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<ReverseProxy>>();
-        ReverseProxy reverseProxy = options.Value;
-
-        // Swagger bilgilerini yakala
-        foreach (var cluster in reverseProxy.Clusters)
+        try
         {
-            foreach (var destination in cluster.Value.Destinations)
+            var httpClient = builder.Services.BuildServiceProvider().GetRequiredService<HttpClient>();
+            var options = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<ReverseProxy>>();
+            ReverseProxy reverseProxy = options.Value;
+
+            // Swagger bilgilerini yakala
+            foreach (var cluster in reverseProxy.Clusters)
             {
-                if (destination.Value.Swagger is not null)
+                foreach (var destination in cluster.Value.Destinations)
                 {
-                    GetSwaggerJsonFile(httpClient, destination.Value.Address, destination.Value.Swagger.Prefix, destination.Value.Swagger.FileName);
-                    SwaggerFiles.Add(destination.Value.Swagger.SwaggerName, "/" + destination.Value.Swagger.FileName + ".json");
+                    if (destination.Value.Swagger is not null)
+                    {
+                        GetSwaggerJsonFile(httpClient, destination.Value.Address, destination.Value.Swagger.Prefix, destination.Value.Swagger.FileName);
+                        SwaggerFiles.Add(destination.Value.Swagger.SwaggerName, "/" + destination.Value.Swagger.FileName + ".json");
+                    }
                 }
             }
         }
+        catch (Exception ex)
+        {
 
+            Console.WriteLine(ex.Message);
+        }
 
         return builder;
     }
