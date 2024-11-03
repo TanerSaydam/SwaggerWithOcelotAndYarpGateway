@@ -15,8 +15,11 @@ builder.Services.AddOcelot(builder.Configuration)
 
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader());
 
 app.UseSwaggerForOcelotUI(opt =>
 {

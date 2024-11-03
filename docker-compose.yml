@@ -22,4 +22,4 @@ services:
      dockerfile: SwaggerWithOcelotAndYarp.Catalog/Dockerfile
     image: catalog-webapi:latest
     ports:
-    - 5002:8080
+    - 5002:8080  
